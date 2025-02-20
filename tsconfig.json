@@ -19,7 +19,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@boxeadores/*": ["./src/modules/boxeadores/*"],
+      "@eventos/*": ["./src/modules/eventos/*"],
+      "@campeones/*": ["./src/modules/campeones/*"],
+      "@schedule/*": ["./src/modules/schedule/*"],
+      "@resultados/*": ["./src/modules/resultados/*"],
+      "@shared/*": ["./src/modules/shared/*"],
+      "@home/*": ["./src/modules/home/*"],
+      "@db/*": ["./src/modules/db/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
