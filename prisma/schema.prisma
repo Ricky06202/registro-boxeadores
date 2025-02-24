@@ -1,0 +1,266 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model arena {
+  id        Int     @id @default(autoincrement())
+  nombre    String  @db.VarChar(100)
+  imagen    Bytes?  @db.MediumBlob
+  lugar_id  Int?
+  capacidad Int?
+  direccion String? @db.VarChar(255)
+  lugar     lugar?  @relation(fields: [lugar_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "arena_lugar_id_lugar_id_fk")
+
+  @@index([lugar_id], map: "arena_lugar_id_lugar_id_fk")
+}
+
+model club_gym {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(100)
+  address         String?           @db.TinyText()
+  About           String?           @db.TinyText()
+  club_gym_member club_gym_member[]
+  person          person[]
+}
+
+model club_gym_member {
+  id          Int      @id @default(autoincrement())
+  club_gym_id Int
+  person_id   Int
+  person      person   @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "club_gym_member_person_id_person_id_fk")
+  club_gym    club_gym @relation(fields: [club_gym_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "club_gym_member_club_gym_id_club_gym_id_fk")
+
+  @@index([club_gym_id], map: "club_gym_member_club_gym_id_club_gym_id_fk")
+  @@index([person_id], map: "club_gym_member_person_id_person_id_fk")
+}
+
+model boxeador {
+  id                                         Int                @id @default(autoincrement())
+  person_id                                  Int
+  person                                     person             @relation("person", fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxeador_person_id_person_id_fk")
+  encuentros                                 Int?
+  rondas                                     Int?
+  categoria_id                               Int?
+  genero_id                                  Int?
+  fecha_nacimiento                           DateTime?          @db.Date
+  guardia_id                                 Int?
+  altura                                     Int?
+  alcance                                    Int?
+  manager_id                                 Int?
+  promotor_id                                Int?
+  victorias                                  Int?
+  derrotas                                   Int?
+  empates                                    Int?
+  victorias_ko                               Int?
+  derrotas_ko                                Int?
+  categoria                                  categoria?         @relation(fields: [categoria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxeador_categoria_id_categoria_id_fk")
+  genero                                     genero?            @relation(fields: [genero_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxeador_genero_id_genero_id_fk")
+  guardia                                    guardia?           @relation(fields: [guardia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxeador_guardia_id_guardia_id_fk")
+  manager                                    person?            @relation("manager", fields: [manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxeador_manager_id_manager_id_fk")
+  promotor                                   person?            @relation("promotor", fields: [promotor_id], references: [id])
+  boxeador_titulos                           boxeador_titulos[]
+  encuentro_encuentro_boxeador1_idToboxeador encuentro[]        @relation("encuentro_boxeador1_idToboxeador")
+  encuentro_encuentro_boxeador2_idToboxeador encuentro[]        @relation("encuentro_boxeador2_idToboxeador")
+
+  @@index([categoria_id], map: "boxeador_categoria_id_categoria_id_fk")
+  @@index([genero_id], map: "boxeador_genero_id_genero_id_fk")
+  @@index([guardia_id], map: "boxeador_guardia_id_guardia_id_fk")
+  @@index([manager_id], map: "boxeador_manager_id_manager_id_fk")
+}
+
+model boxeador_titulos {
+  id          Int      @id @default(autoincrement()) //es necesario para prisma
+  boxeador_id Int
+  titulo_id   Int
+  boxeador    boxeador @relation(fields: [boxeador_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxeador_titulos_boxeador_id_boxeador_id_fk")
+  titulo      titulo   @relation(fields: [titulo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxeador_titulos_titulo_id_titulo_id_fk")
+
+  @@index([boxeador_id], map: "boxeador_titulos_boxeador_id_boxeador_id_fk")
+  @@index([titulo_id], map: "boxeador_titulos_titulo_id_titulo_id_fk")
+}
+
+model categoria {
+  id        Int        @id @default(autoincrement())
+  categoria String     @db.VarChar(50)
+  boxeador  boxeador[]
+}
+
+//todo agregar referi y los 3 jueces y tiempo en q se dio el ko y ademas puntuaciones para jueces 60-54 58-56 60-58
+model encuentro {
+  id                                        Int                    @id @default(autoincrement())
+  fecha                                     DateTime               @db.Date
+  boxeador1_id                              Int
+  peso_boxeador1                            Float?                 @db.Float
+  boxeador2_id                              Int
+  peso_boxeador2                            Float?                 @db.Float
+  resultado_id                              Int?
+  asaltos_totales                           Int?
+  asaltos_boxeados                          Int?
+  boxeador_encuentro_boxeador1_idToboxeador boxeador               @relation("encuentro_boxeador1_idToboxeador", fields: [boxeador1_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "encuentro_boxeador1_id_boxeador_id_fk")
+  boxeador_encuentro_boxeador2_idToboxeador boxeador               @relation("encuentro_boxeador2_idToboxeador", fields: [boxeador2_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "encuentro_boxeador2_id_boxeador_id_fk")
+  resultados_encuentros                     resultados_encuentros? @relation(fields: [resultado_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "encuentro_resultado_id_resultados_encuentros_id_fk")
+  evento_encuentro                          evento_encuentro[]
+
+  @@index([boxeador1_id], map: "encuentro_boxeador1_id_boxeador_id_fk")
+  @@index([boxeador2_id], map: "encuentro_boxeador2_id_boxeador_id_fk")
+  @@index([resultado_id], map: "encuentro_resultado_id_resultados_encuentros_id_fk")
+}
+
+model evento {
+  id               Int                @id @default(autoincrement())
+  nombre           String             @db.VarChar(100)
+  fecha            DateTime           @db.Date
+  lugar_id         Int?
+  comision         String?            @db.VarChar(100)
+  promotor         String?            @db.VarChar(100)
+  matchmaker       String?            @db.VarChar(100)
+  doctor           String?            @db.VarChar(100)
+  liveStream       Boolean?
+  imagen           Bytes?             @db.MediumBlob
+  resumen          String?            @db.VarChar(255)
+  lugar            lugar?             @relation(fields: [lugar_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "evento_lugar_id_lugar_id_fk")
+  evento_encuentro evento_encuentro[]
+
+  @@index([lugar_id], map: "evento_lugar_id_lugar_id_fk")
+}
+
+model evento_encuentro {
+  id           Int       @id @default(autoincrement())
+  evento_id    Int
+  encuentro_id Int
+  encuentro    encuentro @relation(fields: [encuentro_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "evento_encuentro_encuentro_id_encuentro_id_fk")
+  evento       evento    @relation(fields: [evento_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "evento_encuentro_evento_id_evento_id_fk")
+
+  @@index([encuentro_id], map: "evento_encuentro_encuentro_id_encuentro_id_fk")
+  @@index([evento_id], map: "evento_encuentro_evento_id_evento_id_fk")
+}
+
+model genero {
+  id       Int        @id @default(autoincrement())
+  genero   String     @db.VarChar(255)
+  boxeador boxeador[]
+}
+
+model guardia {
+  id       Int        @id @default(autoincrement())
+  guardia  String     @db.VarChar(50)
+  boxeador boxeador[]
+}
+
+model lugar {
+  id                Int        @id @default(autoincrement())
+  pais_id           Int?
+  provincia_id      Int?
+  ciudad_id         Int?
+  pais              pais?      @relation(fields: [pais_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "lugar_pais_id_pais_id_fk")
+  provincia         provincia? @relation(fields: [provincia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "lugar_provincia_id_provincia_id_fk")
+  ciudad            ciudad?    @relation(fields: [ciudad_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "lugar_ciudad_id_ciudad_id_fk")
+  arena             arena[]
+  evento            evento[]
+  person_residence  person[]   @relation("person_residence_to_lugar")
+  person_birthplace person[]   @relation("person_birthplace_to_lugar")
+
+  @@index([provincia_id], map: "lugar_provincia_id_provincia_id_fk")
+  @@index([ciudad_id], map: "lugar_ciudad_id_ciudad_id_fk")
+  @@index([pais_id], map: "lugar_pais_id_pais_id_fk")
+}
+
+model role {
+  id           Int       @id @default(autoincrement())
+  person_id    Int
+  role_type_id Int
+  career_start DateTime  @db.Date
+  career_end   DateTime? @db.Date
+  status       Boolean
+  company      String?   @db.VarChar(100)
+  contact      String?   @db.TinyText
+  role_types   role_type @relation(fields: [role_type_id], references: [id])
+
+  @@index([person_id], map: "role_person_id_person_id_fk")
+}
+
+model role_type {
+  id        Int    @id @default(autoincrement())
+  role_type String @db.VarChar(50)
+  role      role[]
+}
+
+model person {
+  id               Int               @id @default(autoincrement())
+  image            Bytes?            @db.MediumBlob
+  name             String            @db.VarChar(255)
+  birthname        String?           @db.VarChar(255)
+  alias            String?           @db.VarChar(100)
+  club_gym_id      Int?
+  club_gym         club_gym?         @relation(fields: [club_gym_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "person_club_gym_id_club_gym_id_fk")
+  trainer_id       Int?
+  trainer          person?           @relation("trainer", fields: [trainer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "person_trainer_id_role_id_fk")
+  nationality_id   Int
+  residence_id     Int?
+  birthplace_id    Int?
+  nationality      nacionalidad      @relation(fields: [nationality_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "person_nationality_id_nacionalidad_id_fk")
+  residence        lugar?            @relation("person_residence_to_lugar", fields: [residence_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "person_residence_id_lugar_id_fk")
+  birthplace       lugar?            @relation("person_birthplace_to_lugar", fields: [birthplace_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "person_birthplace_id_lugar_id_fk")
+  person           boxeador[]        @relation("person")
+  manager          boxeador[]        @relation("manager")
+  promotor         boxeador[]        @relation("promotor")
+  trainer_toPerson person[]          @relation("trainer")
+  club_gym_member  club_gym_member[]
+
+  @@index([nationality_id], map: "person_nationality_id_nacionalidad_id_fk")
+  @@index([residence_id], map: "person_residence_id_lugar_id_fk")
+  @@index([birthplace_id], map: "person_birthplace_id_lugar_id_fk")
+  @@index([trainer_id], map: "person_trainer_id_role_id_fk")
+}
+
+model nacionalidad {
+  id           Int      @id @default(autoincrement())
+  nacionalidad String   @db.VarChar(255)
+  countryCode  String   @db.VarChar(3)
+  person       person[]
+}
+
+model pais {
+  id        Int         @id @default(autoincrement())
+  pais      String      @db.VarChar(100)
+  provincia provincia[]
+  lugar     lugar[]
+}
+
+model provincia {
+  id        Int      @id @default(autoincrement())
+  provincia String   @db.VarChar(100)
+  pais_id   Int
+  lugar     lugar[]
+  pais      pais     @relation(fields: [pais_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "provincia_pais_id_pais_id_fk")
+  ciudad    ciudad[]
+
+  @@index([pais_id], map: "provincia_pais_id_pais_id_fk")
+}
+
+model ciudad {
+  id           Int       @id @default(autoincrement())
+  ciudad       String    @db.VarChar(100)
+  provincia_id Int
+  lugar        lugar[]
+  provincia    provincia @relation(fields: [provincia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ciudad_provincia_id_provincia_id_fk")
+
+  @@index([provincia_id], map: "ciudad_provincia_id_provincia_id_fk")
+}
+
+model resultados_encuentros {
+  id        Int         @id @default(autoincrement())
+  resultado String      @db.VarChar(10)
+  encuentro encuentro[]
+}
+
+model titulo {
+  id               Int                @id @default(autoincrement())
+  titulo           String             @db.VarChar(50)
+  boxeador_titulos boxeador_titulos[]
+}

@@ -27,3 +27,7 @@ export interface BoxeadorGenericCard {
         codigo: string;
     }
 }
+
+export interface BoxeadorForm {
+    
+}
