@@ -25,7 +25,6 @@ model club_gym {
   address         String?           @db.TinyText()
   About           String?           @db.TinyText()
   club_gym_member club_gym_member[]
-  person          person[]
 }
 
 model club_gym_member {
@@ -196,8 +195,6 @@ model person {
   name             String            @db.VarChar(255)
   birthname        String?           @db.VarChar(255)
   alias            String?           @db.VarChar(100)
-  club_gym_id      Int?
-  club_gym         club_gym?         @relation(fields: [club_gym_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "person_club_gym_id_club_gym_id_fk")
   trainer_id       Int?
   trainer          person?           @relation("trainer", fields: [trainer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "person_trainer_id_role_id_fk")
   nationality_id   Int

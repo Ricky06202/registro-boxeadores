@@ -1,33 +1,17 @@
-export interface BoxeadorGenericCardAPI {
-    id: number;
-    nombre: string;
-    apellido: string;
-    alias: string;
-    categoria: string;
-    generoId: number;
-    genero: string;
-    nacionalidadId: number;
-    nacionalidad: string;
-    countryCode: string;
-}
-
 export interface BoxeadorGenericCard {
+  id: number;
+  categoria: string;
+  genero: string;
+  persona: {
     id: number;
     nombre: string;
-    apellido: string;
     alias: string;
-    categoria: string;
-    genero: {
-        id: number;
-        genero: string;
-    };
+    imagen?: any;
     nacionalidad: {
-        id: number;
-        nacionalidad: string;
-        codigo: string;
-    }
+      nacionalidad: string;
+      codigo: string;
+    };
+  };
 }
 
-export interface BoxeadorForm {
-    
-}
+export interface BoxeadorForm {}

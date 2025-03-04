@@ -2,7 +2,7 @@
 import { BoxeadorCard } from "@boxeadores/components/BoxeadorCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BoxeadorGenericCard, BoxeadorGenericCardAPI } from "@shared/types/boxeadoresTypes";
+import { BoxeadorGenericCard } from "@shared/types/boxeadoresTypes";
 import { parseBoxeadorGC } from "@shared/logic/boxeadoresConverter";
 import { PlusIcon } from "lucide-react";
 import { PanelFlotante } from "@shared/components/PanelFlotante";
@@ -12,7 +12,7 @@ export default function BoxeadoresPage() {
   useEffect(() => {
     const getBoxeadores = async () => {
       const { data } = await axios.get("http://localhost:3000/api/boxeadores")
-      setBoxeadores(data.map((box: BoxeadorGenericCardAPI) => parseBoxeadorGC(box)))
+      setBoxeadores(data.map((box: any) => parseBoxeadorGC(box)))
     }
     getBoxeadores()
   }, [])
@@ -32,12 +32,11 @@ export default function BoxeadoresPage() {
           <BoxeadorCard
             key={boxeador.id}
             boxeadorId={boxeador.id}
-            nombre={boxeador.nombre}
-            apellido={boxeador.apellido}
+            nombre={boxeador.persona.nombre}
             categoria={boxeador.categoria}
-            imagen=""
-            nacionalidad={boxeador.nacionalidad.nacionalidad}
-            countryCode={boxeador.nacionalidad.codigo}
+            imagen={boxeador.persona.imagen}
+            nacionalidad={boxeador.persona.nacionalidad.nacionalidad}
+            countryCode={boxeador.persona.nacionalidad.codigo}
           />
         ))}
       </div>
