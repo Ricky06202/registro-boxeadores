@@ -1,120 +1,107 @@
-export const FormBoxeador: React.FC = () => {
-  const [boxeador, setBoxeador] = useState<>({
-    nombre: '',
-    apellido: '',
-    alias: '',
-    categoria: '',
-    genero: '',
-    nacionalidad: '',
-    countryCode: '',
-    imagen: '',
-  });
+"use client"
+import { ImgField } from "@shared/components/ImgField";
+import { OptionField } from "@shared/components/OptionField";
+import { PanelFlotante } from "@shared/components/PanelFlotante";
+import { TextField } from "@shared/components/TextField";
+import { useFormStateStore } from "@shared/store/formStateStore";
+import { useBoxeadorStore } from "@boxeadores/store/boxeadorStore";
+import { useEffect, useState } from "react";
+import { getGeneros, getCategorias, getNacionalidades } from "@boxeadores/services/fieldOptionsService";
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(boxeador);
+export interface FormBoxeadorProps {
+  onAccept: () => void;
+  title?: string;
+  acceptText?: string;
+}
+
+
+export const FormBoxeador: React.FC<FormBoxeadorProps> = ({ onAccept, title, acceptText }) => {
+  const visible = useFormStateStore((state) => state.createPanel);
+  const hideCreate = useFormStateStore((state) => state.hideCreate);
+  const nombre = useBoxeadorStore((state) => state.nombre);
+  const alias = useBoxeadorStore((state) => state.alias);
+  const categoria = useBoxeadorStore((state) => state.categoria);
+  const genero = useBoxeadorStore((state) => state.genero);
+  const nacionalidad = useBoxeadorStore((state) => state.nacionalidad);
+  const imagen = useBoxeadorStore((state) => state.imagen);
+  const resetBoxeador = useBoxeadorStore((state) => state.resetBoxeador);
+  const setNombre = useBoxeadorStore((state) => state.setNombre);
+  const setAlias = useBoxeadorStore((state) => state.setAlias);
+  const setCategoria = useBoxeadorStore((state) => state.setCategoria);
+  const setGenero = useBoxeadorStore((state) => state.setGenero);
+  const setNacionalidad = useBoxeadorStore((state) => state.setNacionalidad);
+  const setImagen = useBoxeadorStore((state) => state.setImagen);
+
+  const [generos, setGeneros] = useState<{ label: string; id: number }[]>([]);
+  const [categorias, setCategorias] = useState<{ label: string; id: number }[]>([]);
+  const [nacionalidades, setNacionalidades] = useState<{ label: string; id: number; countryCode?: string }[]>([]);
+
+  useEffect(() => {
+    getGeneros().then(data => setGeneros(data));
+    getCategorias().then(data => setCategorias(data));
+    getNacionalidades().then(data => setNacionalidades(data));
+  }, []);
+
+  const handleClose = () => {
+    resetBoxeador();
+    hideCreate();
   };
 
-  const handleChange =
-    (key: keyof typeof boxeador) => (e: React.ChangeEvent<HTMLInputElement>) =>
-      setBoxeador((prev) => ({ ...prev, [key]: e.target.value }));
+  if (!visible) return null;
 
   return (
     <PanelFlotante
-      onClose={() => {}}
-      onAccept={() => {}}
-      title="Nuevo Boxeador"
+      onClose={handleClose}
+      onAccept={onAccept}
+      title={title}
+      acceptText={acceptText}
     >
-      <form onSubmit={onSubmit} className="space-y-4">
-        <label className="block">
-          <span className="text-gray-700">Nombre</span>
-          <input
-            type="text"
-            value={boxeador.nombre}
-            onChange={handleChange('nombre')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
+      <form className="grid grid-cols-2 gap-4">
+        <TextField
+          label="Nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          id="nombre"
+        />
 
-        <label className="block">
-          <span className="text-gray-700">Apellido</span>
-          <input
-            type="text"
-            value={boxeador.apellido}
-            onChange={handleChange('apellido')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
+        <TextField
+          label="Alias"
+          value={alias}
+          onChange={(e) => setAlias(e.target.value)}
+          id="alias"
+        />
 
-        <label className="block">
-          <span className="text-gray-700">Alias</span>
-          <input
-            type="text"
-            value={boxeador.alias}
-            onChange={handleChange('alias')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
+        <OptionField
+          label="Genero"
+          selectedOption={genero.toString()}
+          onChange={(e) => setGenero(Number(e.target.value))}
+          id="genero"
+          options={generos}
+        />
 
-        <label className="block">
-          <span className="text-gray-700">Categoria</span>
-          <input
-            type="text"
-            value={boxeador.categoria}
-            onChange={handleChange('categoria')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
+        <OptionField
+          label="Nacionalidad"
+          selectedOption={nacionalidad.toString()}
+          onChange={(e) => setNacionalidad(Number(e.target.value))}
+          id="nacionalidad"
+          options={nacionalidades}
+        />
 
-        <label className="block">
-          <span className="text-gray-700">Genero</span>
-          <select
-            value={boxeador.genero}
-            onChange={handleChange('genero')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          >
-            <option value="">Seleccione un genero</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-          </select>
-        </label>
+        <OptionField
+          label="Categoria"
+          selectedOption={categoria.toString()}
+          onChange={(e) => setCategoria(Number(e.target.value))}
+          id="categoria"
+          options={categorias}
+        />
 
-        <label className="block">
-          <span className="text-gray-700">Nacionalidad</span>
-          <input
-            type="text"
-            value={boxeador.nacionalidad}
-            onChange={handleChange('nacionalidad')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-
-        <label className="block">
-          <span className="text-gray-700">Codigo Pais</span>
-          <input
-            type="text"
-            value={boxeador.countryCode}
-            onChange={handleChange('countryCode')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-
-        <label className="block">
-          <span className="text-gray-700">Imagen</span>
-          <input
-            type="text"
-            value={boxeador.imagen}
-            onChange={handleChange('imagen')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Crear Boxeador
-        </button>
+        <ImgField
+          label="Imagen"
+          id="imagen"
+          value={imagen}
+          onChange={(file) => setImagen(file)}
+        />
+        
       </form>
     </PanelFlotante>
   );

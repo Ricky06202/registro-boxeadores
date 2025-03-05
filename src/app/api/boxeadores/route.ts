@@ -1,4 +1,5 @@
 import { prisma } from "@db/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   const boxeadores = await prisma.boxeador.findMany({
@@ -30,5 +31,5 @@ export async function GET() {
       },
     },
   });
-  return new Response(JSON.stringify(boxeadores));
+  return NextResponse.json(boxeadores);
 }
