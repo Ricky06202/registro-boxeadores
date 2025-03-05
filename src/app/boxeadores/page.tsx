@@ -23,7 +23,7 @@ export default function BoxeadoresPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold my-8">Boxeadores</h1>
         <div className="">
-          <button className="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded" onClick={showCreate}>
+          <button className="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-sm" onClick={showCreate}>
             <PlusIcon className="h-5 w-5 mr-2" />
             Nuevo Boxeador
           </button>

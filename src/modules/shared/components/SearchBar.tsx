@@ -42,13 +42,13 @@ export function SearchBar({ placeholder = 'Buscar boxeador por nombre o ID...', 
           onChange={(e) => handleInputChange(e.target.value)}
           onFocus={() => setIsResultsVisible(true)}
           placeholder={placeholder}
-          className="w-72 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-72 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-hidden focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
       </div>
 
       {/* Results dropdown */}
       {isResultsVisible && results.length > 0 && (
-        <div className="absolute mt-1 w-full bg-white rounded-lg border border-gray-300 shadow-lg max-h-96 overflow-auto z-[200]">
+        <div className="absolute mt-1 w-full bg-white rounded-lg border border-gray-300 shadow-lg max-h-96 overflow-auto z-200">
           {results.map((result) => (
             <Link
               key={result.id}

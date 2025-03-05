@@ -20,7 +20,7 @@ export const TextField: FC<TextFieldProps> = ({
       <input
         type="text"
         id={props.id}
-        className={`block w-full rounded-lg border border-gray-200 bg-white transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 
+        className={`block w-full rounded-lg border border-gray-200 bg-white transition-all focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 
           ${inputSize === 'sm' ? 'px-3 py-2 text-sm' :
            inputSize === 'md' ? 'px-4 py-2' :
            'px-5 py-3 text-lg'}

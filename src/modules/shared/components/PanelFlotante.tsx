@@ -26,7 +26,7 @@ export const PanelFlotante: React.FC<PanelFlotanteProps> = ({
         <div className="flex items-center justify-between gap-4">
           <h2 className="text-2xl font-bold">{title}</h2>
           <button
-            className="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 p-2 rounded-full"
+            className="text-gray-600 hover:text-gray-900 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 p-2 rounded-full"
             onClick={onClose}
             aria-label="Cerrar"
           >
@@ -36,13 +36,13 @@ export const PanelFlotante: React.FC<PanelFlotanteProps> = ({
         <div className="mt-4">{children}</div>
         <div className="mt-4 flex items-center justify-evenly">
           <button
-            className="transition duration-200 ease-in-out bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+            className="transition duration-200 ease-in-out bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2"
             onClick={onAccept}
           >
             {acceptText}
           </button>
           <button
-            className="transition duration-200 ease-in-out bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+            className="transition duration-200 ease-in-out bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-sm"
             onClick={onClose}
           >
             Cancelar

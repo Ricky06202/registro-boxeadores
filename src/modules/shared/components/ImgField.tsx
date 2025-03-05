@@ -64,7 +64,7 @@ export const ImgField: React.FC<ImgFieldProps> = ({ label, id, required = false,
       </label>
 
       <div
-        className={`h-64 w-full rounded-lg border-2 border-dashed border-gray-300 p-4 flex justify-center items-center cursor-pointer relative transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+        className={`h-64 w-full rounded-lg border-2 border-dashed border-gray-300 p-4 flex justify-center items-center cursor-pointer relative transition-all focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
           ${localError || error ? 'border-red-500' : ''}`}
         onClick={handleImageContainerClick}
       >
