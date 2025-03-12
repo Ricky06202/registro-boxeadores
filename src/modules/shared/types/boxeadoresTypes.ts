@@ -13,5 +13,3 @@ export interface BoxeadorGenericCard {
     };
   };
 }
-
-export interface BoxeadorForm {}

@@ -1,46 +1,54 @@
+import { Prisma } from "@prisma/client";
+import {
+  BoxeadorData,
+  NationalityData,
+  PersonData,
+  PlaceData,
+  RoleData,
+} from "@shared/types/boxFormTypes";
 import { create } from "zustand";
 
-interface BoxeadorStore extends Boxeador {
-  resetBoxeador: () => void;
-  setNombre: (value: string) => void;
-  setAlias: (value: string) => void;
-  setCategoria: (value: number) => void;
-  setGenero: (value: number) => void;
-  setNacionalidad: (value: number) => void;
-  setImagen: (value: string) => void;
+interface BoxeadorStore {
+  person: PersonData | null | number;
+  nationality: NationalityData | null | number;
+  residence: PlaceData | null | number;
+  birthplace: PlaceData | null | number;
+  role: RoleData | null | number;
+  boxeador: BoxeadorData | null;
+  resetAll: () => void;
+  setPerson: (value: PersonData) => void;
+  setNationality: (value: NationalityData) => void;
+  setResidence: (value: PlaceData) => void;
+  setBirthplace: (value: PlaceData) => void;
+  setRole: (value: RoleData) => void;
+  setBoxeador: (value: BoxeadorData) => void;
+
+  getBoxeadorCreateInput: () => Prisma.boxeadorCreateInput | null;
+  getBoxeadorUpdateInput: () => Prisma.boxeadorUpdateInput | null;
 }
 
-interface Boxeador {
-  nombre: string;
-  alias: string;
-  categoria: number;
-  genero: number;
-  nacionalidad: number;
-  imagen: any;
-}
-
-export const useBoxeadorStore = create<BoxeadorStore>((set) => ({
-  nombre: "",
-  alias: "",
-  categoria: 0,
-  genero: 0,
-  nacionalidad: 0,
-  imagen: "",
-
-  resetBoxeador: () =>
+export const useBoxeadorStore = create<BoxeadorStore>((set, get) => ({
+  person: null,
+  nationality: null,
+  residence: null,
+  birthplace: null,
+  role: null,
+  boxeador: null,
+  resetAll: () =>
     set({
-      nombre: "",
-      alias: "",
-      categoria: 0,
-      genero: 0,
-      nacionalidad: 0,
-      imagen: "",
+      boxeador: null,
+      person: null,
+      nationality: null,
+      residence: null,
+      birthplace: null,
+      role: null,
     }),
-
-  setNombre: (value: string) => set({ nombre: value }),
-  setAlias: (value: string) => set({ alias: value }),
-  setCategoria: (value: number) => set({ categoria: value }),
-  setGenero: (value: number) => set({ genero: value }),
-  setNacionalidad: (value: number) => set({ nacionalidad: value }),
-  setImagen: (value: any) => set({ imagen: value }),
+  setBoxeador: (value: BoxeadorData) => set({ boxeador: value }),
+  setPerson: (value: PersonData) => set({ person: value }),
+  setNationality: (value: NationalityData) => set({ nationality: value }),
+  setResidence: (value: PlaceData) => set({ residence: value }),
+  setBirthplace: (value: PlaceData) => set({ birthplace: value }),
+  setRole: (value: RoleData) => set({ role: value }),
+  getBoxeadorCreateInput: () => null,
+  getBoxeadorUpdateInput: () => null,
 }));

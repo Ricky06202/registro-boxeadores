@@ -10,3 +10,11 @@ export async function GET() {
   });
   return NextResponse.json(categorias);
 }
+
+export async function POST(req: Request) {
+  const data = await req.json();
+  const newCategoria = await prisma.categoria.create({
+    data,
+  });
+  return NextResponse.json(newCategoria);
+}

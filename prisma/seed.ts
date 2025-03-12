@@ -68,33 +68,33 @@ async function main() {
     // Sembrar datos en la tabla pais
     await prisma.pais.createMany({
       data: [
-        { pais: "Panamá" },
-        { pais: "Colombia" },
-        { pais: "Venezuela" },
-        { pais: "Costa Rica" },
-        { pais: "Nicaragua" },
+        { nombre: "Panamá" },
+        { nombre: "Colombia" },
+        { nombre: "Venezuela" },
+        { nombre: "Costa Rica" },
+        { nombre: "Nicaragua" },
       ],
     });
 
     // Sembrar datos en la tabla provincia
     await prisma.provincia.createMany({
       data: [
-        { provincia: "Chiriquí", pais_id: 1 },
-        { provincia: "Panamá", pais_id: 1 },
-        { provincia: "Bocas del Toro", pais_id: 1 },
-        { provincia: "Veraguas", pais_id: 1 },
-        { provincia: "Coclé", pais_id: 1 },
+        { nombre: "Chiriquí", pais_id: 1 },
+        { nombre: "Panamá", pais_id: 1 },
+        { nombre: "Bocas del Toro", pais_id: 1 },
+        { nombre: "Veraguas", pais_id: 1 },
+        { nombre: "Coclé", pais_id: 1 },
       ],
     });
 
     // Sembrar datos en la tabla ciudad
     await prisma.ciudad.createMany({
       data: [
-        { ciudad: "Boquete", provincia_id: 1 },
-        { ciudad: "Dolega", provincia_id: 1 },
-        { ciudad: "Bugaba", provincia_id: 1 },
-        { ciudad: "Barú", provincia_id: 1 },
-        { ciudad: "Boqueron", provincia_id: 1 },
+        { nombre: "Boquete", provincia_id: 1 },
+        { nombre: "Dolega", provincia_id: 1 },
+        { nombre: "Bugaba", provincia_id: 1 },
+        { nombre: "Barú", provincia_id: 1 },
+        { nombre: "Boqueron", provincia_id: 1 },
       ],
     });
 

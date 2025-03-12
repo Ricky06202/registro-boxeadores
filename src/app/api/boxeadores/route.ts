@@ -1,4 +1,5 @@
 import { prisma } from "@db/prisma";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -32,4 +33,12 @@ export async function GET() {
     },
   });
   return NextResponse.json(boxeadores);
+}
+
+export async function POST(req: Request) {
+  const data = await req.json();
+  const newBoxeador = await prisma.boxeador.create({
+    data: data,
+  });
+  return NextResponse.json(newBoxeador);
 }
