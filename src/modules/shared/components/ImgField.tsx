@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useState, useRef, type ChangeEvent } from "react";
-import { X } from "lucide-react";
+import CloseIcon from '@mui/icons-material/Close';
 
 export interface ImgFieldProps {
   label: string;
@@ -88,7 +88,7 @@ export const ImgField: React.FC<ImgFieldProps> = ({
               onClick={handleRemoveImage}
               className="absolute top-2 right-2 text-white bg-gray-800 rounded-full p-1.5 hover:bg-gray-700 transition-colors duration-200"
             >
-              <X className="h-5 w-5" />
+              <CloseIcon className="h-5 w-5" />
             </button>
           </>
         ) : (

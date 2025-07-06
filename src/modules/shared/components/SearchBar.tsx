@@ -1,10 +1,11 @@
 'use client'
 
-import { Search, Loader2 } from 'lucide-react'
+import SearchIcon from '@mui/icons-material/Search';
 import { useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
 import { useSearch } from '../hooks/useSearch'
 import Link from 'next/link'
+import { CircularProgress } from '@mui/material'
 
 interface SearchBarProps {
   placeholder?: string;
@@ -31,9 +32,9 @@ export function SearchBar({ placeholder = 'Buscar boxeador por nombre o ID...', 
       <div className="relative flex items-center">
         <div className="absolute left-3 text-gray-400">
           {isLoading ? (
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <CircularProgress className="h-5 w-5 animate-spin" />
           ) : (
-            <Search className="h-5 w-5" />
+            <SearchIcon className="h-5 w-5" />
           )}
         </div>
         <input

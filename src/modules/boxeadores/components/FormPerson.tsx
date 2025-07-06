@@ -1,7 +1,7 @@
-import { TextField } from "@shared/components/TextField";
-import { ImgField } from "@shared/components/ImgField";
+import { TextField } from "@/modules/shared/components/TextField";
+import { ImgField } from "@/modules/shared/components/ImgField";
 import { useState } from "react";
-import { DateField } from "@shared/components/DateField";
+import { DateField } from "@/modules/shared/components/DateField";
 
 export default function FormPerson() {
   const [person, setPerson] = useState({

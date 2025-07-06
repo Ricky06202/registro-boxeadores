@@ -1,20 +1,26 @@
-import { useFormStateStore } from "@shared/store/formStateStore";
+import { useTabsStateStore } from "@/modules/shared/store/tabsStateStore";
 import React, { useState } from "react";
+import { Tabs, Tab } from "@mui/material";
 
 interface TabsProps {
   tabs: string[];
+  currentTab: number;
+  setCurrentTab: (tab: number) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({ tabs }) => {
-  const currentTab = useFormStateStore((state) => state.currentTab);
-  const setCurrentTab = useFormStateStore((state) => state.setCurrentTab);
+const TabsComponent: React.FC<TabsProps> = ({ tabs, currentTab, setCurrentTab }) => {
 
   return (
-    <div className="flex border-b border-gray-200 mb-4">
+    <Tabs
+      className="flex border-b border-gray-200 mb-4 "
+      value={currentTab}
+      onChange={(event, newValue) => setCurrentTab(newValue)}
+      variant="scrollable"
+      scrollButtons="auto"
+    >
       {tabs.map((tab, index) => (
-        <button
+        <Tab
           key={index}
-          type="button"
           className={`
             px-4 py-2 text-sm font-medium min-w-[100px] transition-all duration-200
             ${
@@ -24,12 +30,12 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
             }
           `}
           onClick={() => setCurrentTab(index)}
-        >
-          {tab}
-        </button>
+          value={index}
+          label={tab}
+        />
       ))}
-    </div>
+    </Tabs>
   );
 };
 
-export default Tabs;
+export default TabsComponent;

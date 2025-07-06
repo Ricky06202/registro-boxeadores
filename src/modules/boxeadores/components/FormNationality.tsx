@@ -1,33 +1,35 @@
-"use client";
-import { useEffect, useState } from "react";
-import { getNacionalidades } from "@boxeadores/services/fieldOptionsService";
-import { OptionField } from "@shared/components/OptionField";
-import { TextField } from "@shared/components/TextField";
-import Tabs from "@shared/components/Tabs";
-import { useFormStateStore } from "@shared/store/formStateStore";
+'use client'
+import { useEffect, useState } from 'react'
+import { getNacionalidades } from '@/modules/boxeadores/services/fieldOptionsService'
+import { OptionField } from '@/modules/shared/components/OptionField'
+import { TextField } from '@/modules/shared/components/TextField'
+import { useTabsStateStore } from '@/modules/shared/store/tabsStateStore'
+import TabsComponent from '@/modules/shared/components/Tabs'
 
 export default function FormNationality() {
-  const currentTab = useFormStateStore((state) => state.currentTab);
+  const [currentTab, setCurrentTab] = useState<number>(0)
 
   const [person, setPerson] = useState({
-    name: "",
-    alias: "",
-    birthname: "",
-    image: new File([""], ""),
-  });
+    name: '',
+    alias: '',
+    birthname: '',
+    image: new File([''], ''),
+  })
 
-  const [nacionalidad, setNacionalidad] = useState(0);
+  const [nacionalidad, setNacionalidad] = useState(0)
   const [nacionalidades, setNacionalidades] = useState<
     { label: string; id: number; countryCode?: string }[]
-  >([]);
+  >([])
 
   useEffect(() => {
-    getNacionalidades().then((data) => setNacionalidades(data));
-  }, []);
+    getNacionalidades().then((data) => setNacionalidades(data))
+  }, [])
 
   return (
     <form className="grid gap-2">
-      <Tabs tabs={["Existente", "Nueva"]} />
+      <div className="overflow-auto">
+        <TabsComponent tabs={['Existente', 'Nueva']} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      </div>
 
       {currentTab === 0 && (
         <OptionField
@@ -45,5 +47,5 @@ export default function FormNationality() {
         </>
       )}
     </form>
-  );
+  )
 }

@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getLugares } from "@boxeadores/services/fieldOptionsService";
-import { OptionField } from "@shared/components/OptionField";
-import { TextField } from "@shared/components/TextField";
-import Tabs from "@shared/components/Tabs";
-import { useFormStateStore } from "@shared/store/formStateStore";
+import { getLugares } from "@/modules/boxeadores/services/fieldOptionsService";
+import { OptionField } from "@/modules/shared/components/OptionField";
+import { TextField } from "@/modules/shared/components/TextField";
+import Tabs from "@/modules/shared/components/Tabs";
+import { useTabsStateStore } from "@/modules/shared/store/tabsStateStore";
 
 export default function FormLugar() {
-  const currentTab = useFormStateStore((state) => state.currentTab);
+  const [currentTab, setCurrentTab] = useState<number>(0);
 
   const [lugar, setLugar] = useState(0);
   const [lugares, setLugares] = useState<{ label: string; id: number }[]>([]);
@@ -18,7 +18,7 @@ export default function FormLugar() {
 
   return (
     <form className="grid gap-2">
-      <Tabs tabs={["Existente", "Nueva"]} />
+      <Tabs tabs={["Existente", "Nueva"]} currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
       {currentTab === 0 && (
         <OptionField

@@ -11,7 +11,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <>
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
@@ -70,6 +70,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

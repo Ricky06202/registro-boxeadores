@@ -1,4 +1,4 @@
-import { formatearUbicacion } from "@shared/logic/formatLocation";
+import { formatearUbicacion } from "@/modules/shared/logic/formatLocation";
 import axios from "axios";
 
 export const getGeneros = async () => {

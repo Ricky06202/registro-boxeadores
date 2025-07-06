@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from 'lucide-react'
+import { Person } from '@mui/icons-material'
 import { useState, useRef, useEffect } from 'react'
 import { useClickAway } from 'react-use'
 import { createPortal } from 'react-dom'
@@ -86,7 +86,7 @@ export function UserMenu() {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <User className="h-5 w-5 text-blue-600 transition-colors duration-200" />
+        <Person className="h-5 w-5 text-blue-600 transition-colors duration-200" />
       </button>
       {menu}
     </div>

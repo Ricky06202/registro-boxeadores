@@ -1,7 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Header } from '@shared/components/Header'
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+import Container from '@mui/material/Container';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,11 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={inter.className}>
-        <Header />
-        <main className="min-h-screen">
+      <body>
+        <Container>
           {children}
-        </main>
+        </Container>
       </body>
     </html>
   )

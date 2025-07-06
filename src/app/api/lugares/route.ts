@@ -1,4 +1,4 @@
-import { prisma } from "@db/prisma";
+import { prisma } from "../../../modules/shared/lib/prisma";
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
 export async function GET() {
@@ -38,4 +38,12 @@ export async function GET() {
     },
   });
   return NextResponse.json(lugares);
+}
+
+export async function POST(req: Request) {
+  const data = await req.json();
+  const newLugar = await prisma.lugar.create({
+    data,
+  });
+  return NextResponse.json(newLugar);
 }

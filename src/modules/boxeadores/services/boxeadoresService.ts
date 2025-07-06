@@ -1,5 +1,4 @@
-import { Prisma } from "@prisma/client";
-import { parseBoxeadorGC } from "@shared/logic/boxeadoresConverter";
+import { parseBoxeadorGC } from "@/modules/shared/logic/boxeadoresConverter";
 import axios from "axios";
 
 export const getBoxeadores = async () => {
@@ -8,7 +7,7 @@ export const getBoxeadores = async () => {
     .then(({ data }) => data.map((box: any) => parseBoxeadorGC(box)));
 };
 
-export const createBoxeador = async (boxeador: Prisma.boxeadorCreateInput) => {
+export const createBoxeador = async (boxeador: any) => {
   return axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/api/boxeadores`,
     boxeador
@@ -17,7 +16,7 @@ export const createBoxeador = async (boxeador: Prisma.boxeadorCreateInput) => {
 
 export const updateBoxeador = async (
   id: number,
-  boxeador: Prisma.boxeadorCreateInput
+  boxeador: any
 ) => {
   return axios.put(
     `${process.env.NEXT_PUBLIC_API_URL}/api/boxeadores/${id}`,

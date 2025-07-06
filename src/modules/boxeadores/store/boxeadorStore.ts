@@ -5,7 +5,7 @@ import {
   PersonData,
   PlaceData,
   RoleData,
-} from "@shared/types/boxFormTypes";
+} from "@/modules/shared/types/boxFormTypes";
 import { create } from "zustand";
 
 interface BoxeadorStore {
