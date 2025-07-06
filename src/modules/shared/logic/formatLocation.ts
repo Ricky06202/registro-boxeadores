@@ -1,5 +1,5 @@
 export function formatearUbicacion(lugar: any) {
-  let ubicacion = [];
+  const ubicacion = [];
 
   if (lugar.ciudad) {
     ubicacion.push(lugar.ciudad.nombre);

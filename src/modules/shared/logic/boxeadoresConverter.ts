@@ -1,4 +1,4 @@
-import { BoxeadorGenericCard } from "@shared/types/boxeadoresTypes";
+import { BoxeadorGenericCard } from '@/modules/shared/types/boxeadoresTypes'
 
 export function parseBoxeadorGC(boxeador: any): BoxeadorGenericCard {
   return {
