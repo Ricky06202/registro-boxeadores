@@ -17,16 +17,19 @@ async function main() {
         { categoria: "Peso Pesado" },
       ],
     });
+    console.log("Categorias sembradas");
 
     // Sembrar datos en la tabla genero
     await prisma.genero.createMany({
       data: [{ genero: "Masculino" }, { genero: "Femenino" }],
     });
+    console.log("Generos sembrados");
 
     // Sembrar datos en la tabla guardia
     await prisma.guardia.createMany({
       data: [{ guardia: "Orthodox" }, { guardia: "Southpaw" }],
     });
+    console.log("Guardias sembradas");
 
     // Sembrar datos en la tabla titulo
     await prisma.titulo.createMany({
@@ -38,6 +41,7 @@ async function main() {
         { titulo: "Contratitular" },
       ],
     });
+    console.log("Titulos sembrados");
 
     // Sembrar datos en la tabla role_types
     await prisma.role_type.createMany({
@@ -53,6 +57,7 @@ async function main() {
         { role_type: "Juez" },
       ],
     });
+    console.log("Role types sembrados");
 
     // Sembrar datos en la tabla nacionalidad
     await prisma.nacionalidad.createMany({
@@ -64,6 +69,7 @@ async function main() {
         { nacionalidad: "Venezolano", countryCode: "VEN" },
       ],
     });
+    console.log("Nacionalidades sembradas");
 
     // Sembrar datos en la tabla pais
     await prisma.pais.createMany({
@@ -75,6 +81,7 @@ async function main() {
         { nombre: "Nicaragua" },
       ],
     });
+    console.log("Paises sembrados");
 
     // Sembrar datos en la tabla provincia
     await prisma.provincia.createMany({
@@ -86,6 +93,7 @@ async function main() {
         { nombre: "Coclé", pais_id: 1 },
       ],
     });
+    console.log("Provincias sembradas");
 
     // Sembrar datos en la tabla ciudad
     await prisma.ciudad.createMany({
@@ -97,6 +105,7 @@ async function main() {
         { nombre: "Boqueron", provincia_id: 1 },
       ],
     });
+    console.log("Ciudades sembradas");
 
     // Sembrar datos en la tabla lugar
     await prisma.lugar.createMany({
@@ -112,6 +121,7 @@ async function main() {
         { pais_id: 3 },
       ],
     });
+    console.log("Lugares sembrados");
 
     //Sembrar datos en la tabla person
     await prisma.person.createMany({
@@ -162,6 +172,7 @@ async function main() {
         },
       ],
     });
+    console.log("Personas sembradas");
 
     //Sembrar datos en la tabla role
     await prisma.role.createMany({
@@ -256,6 +267,7 @@ async function main() {
         },
       ],
     });
+    console.log("Roles sembrados");
 
     //Sembrar datos en la tabla boxeador
     await prisma.boxeador.createMany({
@@ -331,6 +343,7 @@ async function main() {
         },
       ],
     });
+    console.log("Boxeadores sembrados");
 
     //Sembrar datos en la tabla club_gym
     await prisma.club_gym.createMany({
@@ -342,6 +355,7 @@ async function main() {
         { name: "Boxeo La Piedad" },
       ],
     });
+    console.log("Club gyms sembrados");
 
     // Sembrar datos en la tabla club_gym_member
     await prisma.club_gym_member.createMany({
@@ -353,6 +367,7 @@ async function main() {
         { club_gym_id: 2, person_id: 5 },
       ],
     });
+    console.log("Club gym members sembrados");
 
     // Sembrar datos en la tabla arena
     await prisma.arena.createMany({
@@ -389,6 +404,7 @@ async function main() {
         },
       ],
     });
+    console.log("Arenas sembradas");
 
     // Sembrar datos en la tabla boxeadorTitulos
     await prisma.boxeador_titulos.createMany({
@@ -400,6 +416,7 @@ async function main() {
         { boxeador_id: 1, titulo_id: 5 },
       ],
     });
+    console.log("Boxeador titulos sembrados");
 
     // Sembrar datos en la tabla resultadoEncuentro
     await prisma.resultados_encuentros.createMany({
@@ -411,6 +428,7 @@ async function main() {
         { resultado: "Empate" },
       ],
     });
+    console.log("Resultados de encuentros sembrados");
 
     // Sembrar datos en la tabla encuentro
     await prisma.encuentro.createMany({
@@ -457,6 +475,7 @@ async function main() {
         },
       ],
     });
+    console.log("Encuentros sembrados");
 
     // Sembrar datos en la tabla evento
     await prisma.evento.createMany({
@@ -488,6 +507,7 @@ async function main() {
         },
       ],
     });
+    console.log("Eventos sembrados");
 
     // Sembrar datos en la tabla eventoEncuentro
     await prisma.evento_encuentro.createMany({
@@ -499,6 +519,7 @@ async function main() {
         { evento_id: 3, encuentro_id: 5 },
       ],
     });
+    console.log("Eventos de encuentros sembrados");
 
     console.log("Datos sembrados con éxito");
   } catch (error) {

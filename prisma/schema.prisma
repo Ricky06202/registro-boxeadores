@@ -3,14 +3,15 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model arena {
   id        Int     @id @default(autoincrement())
-  nombre    String  @unique @db.VarChar(100)
-  imagen    Bytes?  @db.MediumBlob
+  nombre    String  @unique
+  imagen    String? @db.Text()
   lugar_id  Int?
   capacidad Int?
   direccion String? @db.VarChar(255)
@@ -19,9 +20,9 @@ model arena {
 
 model club_gym {
   id              Int               @id @default(autoincrement())
-  name            String            @unique @db.VarChar(100)
-  address         String?           @db.TinyText()
-  About           String?           @db.TinyText()
+  name            String            @unique
+  address         String?           @db.Text()
+  About           String?           @db.Text()
   club_gym_member club_gym_member[]
 }
 
@@ -74,7 +75,7 @@ model boxeador_titulos {
 
 model categoria {
   id        Int        @id @default(autoincrement())
-  categoria String     @unique @db.VarChar(50)
+  categoria String     @unique
   boxeador  boxeador[]
 }
 
@@ -83,9 +84,9 @@ model encuentro {
   id                    Int                    @id @default(autoincrement())
   fecha                 DateTime               @db.Date
   boxeador1_id          Int
-  peso_boxeador1        Float?                 @db.Float
+  peso_boxeador1        Float?                 
   boxeador2_id          Int
-  peso_boxeador2        Float?                 @db.Float
+  peso_boxeador2        Float?                 
   resultado_id          Int?
   asaltos_totales       Int?
   asaltos_boxeados      Int?
@@ -97,16 +98,16 @@ model encuentro {
 
 model evento {
   id               Int                @id @default(autoincrement())
-  nombre           String             @db.VarChar(100)
+  nombre           String            
   fecha            DateTime           @db.Date
   lugar_id         Int?
-  comision         String?            @db.VarChar(100)
-  promotor         String?            @db.VarChar(100)
-  matchmaker       String?            @db.VarChar(100)
-  doctor           String?            @db.VarChar(100)
+  comision         String?            
+  promotor         String?            
+  matchmaker       String?            
+  doctor           String?            
   liveStream       Boolean?
-  imagen           Bytes?             @db.MediumBlob
-  resumen          String?            @db.VarChar(255)
+  imagen           String?            @db.Text()
+  resumen          String?            
   lugar            lugar?             @relation(fields: [lugar_id], references: [id])
   evento_encuentro evento_encuentro[]
 }
@@ -122,13 +123,13 @@ model evento_encuentro {
 
 model genero {
   id       Int        @id @default(autoincrement())
-  genero   String     @unique @db.VarChar(255)
+  genero   String     @unique
   boxeador boxeador[]
 }
 
 model guardia {
   id       Int        @id @default(autoincrement())
-  guardia  String     @unique @db.VarChar(50)
+  guardia  String     @unique
   boxeador boxeador[]
 }
 
@@ -160,24 +161,24 @@ model role {
   career_start DateTime  @db.Date
   career_end   DateTime? @db.Date
   status       Boolean
-  company      String?   @db.VarChar(100)
-  contact      String?   @db.TinyText
+  company      String?   
+  contact      String?   
 
   @@id([person_id, role_type_id])
 }
 
 model role_type {
   id        Int    @id @default(autoincrement())
-  role_type String @unique @db.VarChar(50)
+  role_type String @unique
   role      role[]
 }
 
 model person {
   id               Int               @id @default(autoincrement())
-  image            Bytes?            @db.MediumBlob
-  name             String            @db.VarChar(255)
-  birthname        String?           @db.VarChar(255)
-  alias            String?           @db.VarChar(100)
+  image            String?           @db.Text()
+  name             String            
+  birthname        String?           
+  alias            String?           
   trainer_id       Int?
   trainer          person?           @relation("trainer", fields: [trainer_id], references: [id])
   nationality_id   Int
@@ -196,21 +197,21 @@ model person {
 
 model nacionalidad {
   id           Int      @id @default(autoincrement())
-  nacionalidad String   @unique @db.VarChar(255)
-  countryCode  String   @unique @db.VarChar(3)
+  nacionalidad String   @unique
+  countryCode  String   @unique
   person       person[]
 }
 
 model pais {
   id         Int         @id @default(autoincrement())
-  nombre     String      @unique @db.VarChar(100)
+  nombre     String      @unique
   provincias provincia[]
   lugares    lugar[]
 }
 
 model provincia {
   id       Int      @id @default(autoincrement())
-  nombre   String   @unique @db.VarChar(100)
+  nombre   String   @unique
   pais_id  Int
   pais     pais     @relation(fields: [pais_id], references: [id])
   ciudades ciudad[]
@@ -222,7 +223,7 @@ model provincia {
 
 model ciudad {
   id           Int       @id @default(autoincrement())
-  nombre       String    @unique @db.VarChar(100)
+  nombre       String    @unique
   provincia_id Int
   provincia    provincia @relation(fields: [provincia_id], references: [id])
   lugares      lugar[]
@@ -233,12 +234,12 @@ model ciudad {
 
 model resultados_encuentros {
   id        Int         @id @default(autoincrement())
-  resultado String      @unique @db.VarChar(10)
+  resultado String      @unique
   encuentro encuentro[]
 }
 
 model titulo {
   id               Int                @id @default(autoincrement())
-  titulo           String             @unique @db.VarChar(50)
+  titulo           String             @unique
   boxeador_titulos boxeador_titulos[]
 }
