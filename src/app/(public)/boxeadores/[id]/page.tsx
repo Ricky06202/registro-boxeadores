@@ -6,7 +6,7 @@ interface IParams {
   id: string;
 }
 
-export default function page() {
+export default function Page() {
   const { id } = useParams<IParams>();
   return <div>page {id}</div>;
 }
