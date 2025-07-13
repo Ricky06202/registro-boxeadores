@@ -56,7 +56,7 @@ function PersonCard({
           </h2>
           {person.alias && (
             <p className="mt-2 text-gray-600 text-lg italic">
-              "{person.alias}"
+              {`"${person.alias}"`}
             </p>
           )}
           {person.birthname && (
