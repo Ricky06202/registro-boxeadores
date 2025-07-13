@@ -3,18 +3,17 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model arena {
   id        Int     @id @default(autoincrement())
   nombre    String  @unique
-  imagen    String? @db.Text()
+  imagen    String?
   lugar_id  Int?
   capacidad Int?
-  direccion String? @db.VarChar(255)
+  direccion String?
   lugar     lugar?  @relation(fields: [lugar_id], references: [id])
 }
 
@@ -84,9 +83,9 @@ model encuentro {
   id                    Int                    @id @default(autoincrement())
   fecha                 DateTime               @db.Date
   boxeador1_id          Int
-  peso_boxeador1        Float?                 
+  peso_boxeador1        Float?
   boxeador2_id          Int
-  peso_boxeador2        Float?                 
+  peso_boxeador2        Float?
   resultado_id          Int?
   asaltos_totales       Int?
   asaltos_boxeados      Int?
@@ -98,17 +97,20 @@ model encuentro {
 
 model evento {
   id               Int                @id @default(autoincrement())
-  nombre           String            
+  nombre           String
   fecha            DateTime           @db.Date
   lugar_id         Int?
-  comision         String?            
-  promotor         String?            
-  matchmaker       String?            
-  doctor           String?            
+  comision         String?
+  promotor_id      Int?
+  matchmaker_id    Int?
+  doctor_id        Int?
   liveStream       Boolean?
-  imagen           String?            @db.Text()
-  resumen          String?            
+  imagen           String?
+  resumen          String?
   lugar            lugar?             @relation(fields: [lugar_id], references: [id])
+  promotor         person?            @relation("promotor2", fields: [promotor_id], references: [id])
+  matchmaker       person?            @relation("matchmaker", fields: [matchmaker_id], references: [id])
+  doctor           person?            @relation("doctor", fields: [doctor_id], references: [id])
   evento_encuentro evento_encuentro[]
 }
 
@@ -161,8 +163,8 @@ model role {
   career_start DateTime  @db.Date
   career_end   DateTime? @db.Date
   status       Boolean
-  company      String?   
-  contact      String?   
+  company      String?
+  contact      String?
 
   @@id([person_id, role_type_id])
 }
@@ -175,10 +177,10 @@ model role_type {
 
 model person {
   id               Int               @id @default(autoincrement())
-  image            String?           @db.Text()
-  name             String            
-  birthname        String?           
-  alias            String?           
+  image            String?
+  name             String
+  birthname        String?
+  alias            String?
   trainer_id       Int?
   trainer          person?           @relation("trainer", fields: [trainer_id], references: [id])
   nationality_id   Int
@@ -193,6 +195,9 @@ model person {
   trainer_toPerson person[]          @relation("trainer")
   club_gym_member  club_gym_member[]
   role             role[]
+  doctor           evento[] @relation("doctor")
+  promotor2        evento[] @relation("promotor2")
+  matchmaker       evento[] @relation("matchmaker")
 }
 
 model nacionalidad {

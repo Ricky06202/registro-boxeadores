@@ -4,18 +4,20 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navigationItems = [
+  { name: 'Historia', href: '/' },
+  { name: 'Miembros', href: '/miembros' },
   { name: 'Boxeadores', href: '/boxeadores' },
   { name: 'Eventos', href: '/eventos' },
-  { name: 'Campeones', href: '/campeones' },
-  { name: 'Schedule', href: '/schedule' },
-  { name: 'Resultados', href: '/resultados' },
+  // { name: 'Campeones', href: '/campeones' },
+  // { name: 'Schedule', href: '/schedule' },
+  // { name: 'Resultados', href: '/resultados' },
 ]
 
 export function Navigation() {
   const pathname = usePathname()
 
   return (
-    <nav className="flex items-center gap-2">
+    <nav className="flex items-center flex-wrap justify-center gap-2">
       {navigationItems.map((item) => {
         const isActive = pathname === item.href
         return (

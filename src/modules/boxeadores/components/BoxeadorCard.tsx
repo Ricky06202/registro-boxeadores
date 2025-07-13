@@ -30,7 +30,7 @@ export const BoxeadorCard: FC<IBoxeadorCardProps> = ({
 
   return (
     <div
-      className="cursor-pointer flex items-center rounded-lg border border-transparent hover:bg-blue-50 p-2 hover:border hover:border-blue-500 relative overflow-hidden group"
+      className="cursor-pointer flex items-center rounded-lg border border-transparent hover:bg-blue-50 p-2 hover:border hover:border-blue-500 relative overflow-hidden group w-90"
     >
       <img
         className="h-20 w-16 rounded-lg object-cover cursor-pointer hover:scale-110 transition-all duration-200"

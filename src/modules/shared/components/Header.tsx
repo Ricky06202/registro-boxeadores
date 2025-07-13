@@ -20,9 +20,8 @@ export function Header() {
       
       {/* Barra de navegación sticky */}
       <div className="sticky top-0 z-10 w-full bg-white/95 backdrop-blur-sm supports-backdrop-filter:bg-white/60 shadow-xs">
-        <div className="container mx-auto flex items-center justify-between h-16 px-6">
+        <div className="container mx-auto flex flex-col md:flex-row items-center justify-center h-32 md:h-16 px-6">
           <Navigation />
-          <SearchBar onSearch={(query) => console.log('Searching:', query)} />
         </div>
       </div>
     </>

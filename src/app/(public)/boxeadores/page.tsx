@@ -5,6 +5,7 @@ import { NewBoxeadorPanel } from '@/modules/boxeadores/components/NewBoxeadorPan
 import { useBoxeadoresStore } from '@/modules/boxeadores/store/boxeadoresStore'
 import { redirect } from 'next/navigation'
 import NuevoBoxeadorButton from '@/modules/boxeadores/components/NuevoBoxeadorButton'
+import { SearchBar } from '@/modules/shared/components/SearchBar'
 
 export default function BoxeadoresPage() {
   const boxeadores = useBoxeadoresStore((state) => state.boxeadores)
@@ -18,11 +19,10 @@ export default function BoxeadoresPage() {
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold my-8">Boxeadores</h1>
-        <div className="">
-          <NuevoBoxeadorButton />
-        </div>
+        <SearchBar placeholder="Buscar boxeador..." />
+        <NuevoBoxeadorButton />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
         {boxeadores?.map((boxeador) => (
           <BoxeadorCard
             key={boxeador.id}
