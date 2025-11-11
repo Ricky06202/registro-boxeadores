@@ -13,7 +13,6 @@ export default function Page() {
   useEffect(() => {
     getBoxeadorById(parseInt(id as string)).then(({ data }) => {
       setBoxeador(parseBoxeador(data))
-      console.log(data)
     })
   }, [])
   return (

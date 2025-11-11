@@ -1,10 +1,6 @@
 'use client'
 import { PanelFlotante } from '@/modules/shared/components/PanelFlotante'
-import FormPerson from './FormPerson'
-import FormNationality from './FormNationality'
-import FormLugar from './FormLugar'
 import { useState } from 'react'
-import FormBoxeador from './FormBoxeador'
 
 export interface NewBoxeadorProps {
   open: boolean
@@ -34,17 +30,17 @@ export const NewBoxeadorPanel: React.FC<NewBoxeadorProps> = ({
       currentTab={currentTab}
       setCurrentTab={setCurrentTab}
       tabs={[
-        'Boxeador',
+        'Evento',
         'Persona',
         'Nacionalidad',
         'Lugar',
       ]}
     >
       
-      {currentTab === 0 && <FormBoxeador />}
+      {/* {currentTab === 0 && <FormBoxeador />}
       {currentTab === 1 && <FormPerson />}
       {currentTab === 2 && <FormNationality />}
-      {currentTab === 3 && <FormLugar />}
+      {currentTab === 3 && <FormLugar />} */}
     </PanelFlotante>
   )
 }
